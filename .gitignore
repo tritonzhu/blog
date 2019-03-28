@@ -1,0 +1,11 @@
+hugo.exe
+
+# node 
+node_modules
+
+# theme sample
+exampleSite
+
+# compiled output
+public
+
