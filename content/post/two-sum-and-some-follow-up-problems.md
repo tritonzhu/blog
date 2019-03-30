@@ -1,6 +1,7 @@
 ---
 title: "Two Sum and some Follow-up Problems"
 date: 2019-03-27
+markup: mmark
 tags:
  - "algorithm"
 categories:
@@ -184,7 +185,7 @@ public void add(List<int[]> list, int i, int j) {
 
 ### Fewer Limitations: every number could be used multiple times 
 
-I met this problem in an interview and I failed, after that I thought it carefully, and it's the initial reason why I wrote this post.
+I met this problem in an interview and I failed as I treated it as a recursion problem but failed to find the recursion relation. After that I thought it carefully, and it's the initial reason why I wrote this post.
 
 Firstly let's describe the problem:
 
@@ -261,6 +262,7 @@ public void search(int[] nums, int sum, int index, int target,
         subList.add(nums[i]);
         // still search from index i as nums[i] could be used multi times
         search(nums, sum + nums[i], i, target, list, subList); 
+        // back to last path, the sign of backtracking
         subList.remove(subList.size() - 1);
     }
 }
@@ -268,8 +270,47 @@ public void search(int[] nums, int sum, int index, int target,
 
 **Time complexity**: 
 
-It's a little complicated, the filter process contributes O(n) to the time, then let's count the search space:
+It's a little complicated, the filter process contributes O(n) to the time, then let's observe the search space:
 
-> let $n_i$ be the $i^{th}$ integer in the array, *T*  be the target
+![search space](/img/2019-03/search-space.png)
+
+The first number is the integer to be added to the solution, the second number is the sum of all the selected integers.
+
+It's a N-ary tree with max N levels (if the array contains 1). Now let's do some math works:
+
+> Assuming that there're $$n$$ integers in the filtered array, let $$N_i$$ be the $$i^{th}$$ integer, $$T$$  be the target,
 >
-> for $n_i$ it would search $c_i =T / n_i$ times to add $n_i$ to the answer, then $(T - (c_i - 1)n_i) / n_{i+1})$ times to add $c_i - 1$ times $n_i$ and $n_{i+1}$, let 
+> for simplicity, we also assume that the filtered array is sorted in ascending order (easily satisfied by sorting, which takes only $$O(nlogn)$$ time), then the search tree's max depth $$D = \lceil T / N_0\rceil$$
+>
+> use $$C_i$$ as the node count for level $$i$$, it's obvious that $$C_1 = n$$, 
+>
+> consider the children count $$C_1j$$ of each node $$j$$ in level 1, we have
+>
+> $$
+> \begin {equation} 
+> C_1j = 
+> \begin{cases}
+> n - j & & {T - N_j >= 0}\\
+> 0 & & {T - N_j} < 0
+> \end{cases}
+> \end{equation}
+> $$
+>
+> then $$ C_2 = \sum_{j=0}^{n-1}C_{1j} = n * (n - 1) / 2 $$ if $$T$$ is large enough. Though some paths have been skipped, it's still $$O(n^2)$$.
+>
+> For the level $$ l <= \lceil T/N_{n-1} \rceil, C_l = O(n^l) $$,  then for level $$ l > \lceil T / N_{n-1} \rceil $$ , $$ C_l $$ would go on being in $$O(n^l)$$ and then decrease after $$l$$ exceeds some threshold $$t$$. The accurate value of $$t$$ depends on the distribution of $$N_i$$, but for average cases we can assume that $$ t = avg(N_i) = \sum_{i=0}^{n-1}N_i / n $$ .
+>
+
+Since the largest power dominates the time complexity, the time complexity of this algorithm is $$O(n^{avg(N_i)})$$.
+
+**Space complexity:**
+
+$$O(D)$$, where $$D$$ is the max search tree depth.
+
+
+
+### Conclusion
+
+To solve an algorithm problem, firstly clarify all the conditions and make no assumptions unless it's been given clearly. Then use proper data structures and strategies to solve the problem. Some factors should be considers as they may have an influence on the correctness and time complexity. For example, **order** and **duplicates** are two important factors for array related problems.
+
+For many cases, use space as a cost to reduce the time complexity is a reasonable choice. If there's a brute force solution with $$O(n^2)$$, recusion, divide and conquer and sorting are typical ways to reduce the time complexity. And if all situations should be checked, backtracking is the first choice.
