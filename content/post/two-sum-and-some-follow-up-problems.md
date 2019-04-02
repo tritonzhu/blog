@@ -296,9 +296,9 @@ It's a N-ary tree with max N levels (if the array contains 1). Now let's do some
 > \end{equation}
 > $$
 >
-> then $$ C_2 = \sum_{j=0}^{n-1}C_{1j} = n * (n - 1) / 2 $$ if $$T$$ is large enough. Though some paths have been skipped, it's still $$O(n^2)$$.
+> then $$ C_2 = \sum_{j=0}^{n-1}C_{1j} = n * (n + 1) / 2 $$ if $$T$$ is large enough. Though some paths have been skipped, it's still $$O(n^2)$$.
 >
-> For the level $$ l <= \lceil T/N_{n-1} \rceil, C_l = O(n^l) $$,  then for level $$ l > \lceil T / N_{n-1} \rceil $$ , $$ C_l $$ would go on being in $$O(n^l)$$ and then decrease after $$l$$ exceeds some threshold $$t$$. The accurate value of $$t$$ depends on the distribution of $$N_i$$, but for average cases we can assume that $$ t = avg(N_i) = \sum_{i=0}^{n-1}N_i / n $$ .
+> For the level $$ l <= \lceil T/N_{n-1} \rceil, C_l = O(n^l) ​$$,  then for level $$ l > \lceil T / N_{n-1} \rceil ​$$ , $$ C_l ​$$ would go on being in $$O(n^l)​$$ and then decrease after $$l​$$ exceeds some threshold $$t​$$. The accurate value of $$t​$$ depends on the distribution of $$N_i​$$, but for average cases we can assume that $$ t = avg(N_i) = \sum_{i=0}^{n-1}N_i / n ​$$ .
 >
 
 Since the largest power dominates the time complexity, the time complexity of this algorithm is $$O(n^{avg(N_i)})$$.
