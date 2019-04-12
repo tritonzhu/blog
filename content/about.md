@@ -11,7 +11,7 @@ mathjax: false
 
 ### About me
 
-I'm Owen, a backend developer in China.  My interests include distributed systems,  big data and machine learning. My primary language is Java, but I also use Python, C++, and recently I'm learning Go. 
+I'm Owen, a backend server developer in China.  While my interest in coding varies, I mainly focus on distributed systems,  big data and machine learning. Java is my primary language, but I also use Python, C++, and sometimes javascript and so on. Recently I'm learning Go, it's cool.
 
 ### About the site
 
