@@ -221,7 +221,7 @@ So we need to add some restrictions here, any one of the following three is fine
 * limit the output list size
 * limit the number count in the answer
 
-For simplicity, we assume that there're only positive integers.
+For simplicity, we assume that there're only positive integers. With this condition, it becomes [Combination Sum](https://leetcode.com/problems/combination-sum/).
 
 Another noticeable point is that we output the original integers rather than their indexes as it's easy to check the answer, we should also pay attention to duplicate numbers to avoid duplicate answers. If we use indexes as output, then we don't need to filter the duplicates.
 
